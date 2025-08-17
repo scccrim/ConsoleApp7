@@ -13,6 +13,7 @@
 
     public void ChangeTimeZone()
     {
+        Console.Clear();
         Console.WriteLine("Dostupná časová pásma:\n");
         int colWidth = 40;
         int cols = 3;
