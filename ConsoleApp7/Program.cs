@@ -7,7 +7,6 @@ namespace DigitalClockApp
     {
         static void Main()
         {
-
             ClockManager clockManager = new ClockManager();
             clockManager.Run();
         }
@@ -18,20 +17,18 @@ namespace DigitalClockApp
         private TimeZoneHandler timeZoneHandler = new TimeZoneHandler();
         private AlarmHandler alarmHandler = new AlarmHandler();
         private bool running = true;
-        private bool forceRefresh = false; // nová proměnná
 
         public void Run()
         {
             while (running)
             {
-
-                DisplayClock(); // zobraz hodiny vždy jako první
+                Console.Clear();   // vždy začni čistou konzolí
+                DisplayClock();    // zobraz hodiny
 
                 Console.SetCursorPosition(0, 7); // menu pod hodinami
                 Console.ForegroundColor = ConsoleColor.Red;
 
                 Console.WriteLine("Jakub Olivík 3.C");
-
                 Console.WriteLine("==== MENU ====");
                 Console.WriteLine("1. Změna časového pásma");
                 Console.WriteLine("2. Nastavení budíku");
@@ -53,8 +50,6 @@ namespace DigitalClockApp
                         running = false;
                         break;
                 }
-
-                Console.Clear(); // po akci vyčisti a vrať se zpět na začátek cyklu
             }
 
             Environment.Exit(0);
@@ -64,35 +59,19 @@ namespace DigitalClockApp
         {
             string[] digitsStandard = new string[]
             {
-        " ███ \n█   █\n█   █\n█   █\n ███ ",
-        "  █  \n ██  \n  █  \n  █  \n ███ ",
-        " ███ \n    █\n ███ \n█    \n█████",
-        "████ \n    █\n ███ \n    █\n████ ",
-        "█   █\n█   █\n█████\n    █\n    █",
-        "█████\n█    \n████ \n    █\n████ ",
-        " ███ \n█    \n████ \n█   █\n ███ ",
-        "█████\n    █\n   █ \n  █  \n  █  ",
-        " ███ \n█   █\n ███ \n█   █\n ███ ",
-        " ███ \n█   █\n ████\n    █\n ███ ",
-            };
-
-            string[] digitsAlt = new string[]
-            {
-        "╔═══╗\n║   ║\n║   ║\n║   ║\n╚═══╝",
-        "  ║  \n  ║  \n  ║  \n  ║  \n  ║  ",
-        "╔═══╗\n    ║\n╔═══╝\n║    \n╚════",
-        "╔═══╗\n    ║\n ═══╣\n    ║\n╚═══╝",
-        "║   ║\n║   ║\n╚═══╣\n    ║\n    ║",
-        "╔════\n║    \n╚═══╗\n    ║\n╚═══╝",
-        "╔═══╗\n║    \n╠═══╗\n║   ║\n╚═══╝",
-        "════╗\n    ║\n   ╔╝\n  ╔╝ \n  ║  ",
-        "╔═══╗\n║   ║\n╠═══╣\n║   ║\n╚═══╝",
-        "╔═══╗\n║   ║\n╚═══╣\n    ║\n╚═══╝",
+                " ███ \n█   █\n█   █\n█   █\n ███ ",
+                "  █  \n ██  \n  █  \n  █  \n ███ ",
+                " ███ \n    █\n ███ \n█    \n█████",
+                "████ \n    █\n ███ \n    █\n████ ",
+                "█   █\n█   █\n█████\n    █\n    █",
+                "█████\n█    \n████ \n    █\n████ ",
+                " ███ \n█    \n████ \n█   █\n ███ ",
+                "█████\n    █\n   █ \n  █  \n  █  ",
+                " ███ \n█   █\n ███ \n█   █\n ███ ",
+                " ███ \n█   █\n ████\n    █\n ███ ",
             };
 
             string colon = "     \n  █  \n     \n  █  \n     ";
-
-            var digits = timeZoneHandler.FontStyle == 0 ? digitsStandard : digitsAlt;
 
             DateTime currentTime = TimeZoneInfo.ConvertTime(DateTime.Now, timeZoneHandler.SelectedTimeZone);
             string timeString = currentTime.ToString("HHmm");
@@ -100,17 +79,17 @@ namespace DigitalClockApp
             string[] output = new string[5];
             for (int i = 0; i < 4; i++)
             {
-                string digitArt = digits[int.Parse(timeString[i].ToString())];
+                string digitArt = digitsStandard[int.Parse(timeString[i].ToString())];
                 string[] lines = digitArt.Split('\n');
                 for (int j = 0; j < 5; j++)
                 {
                     output[j] += lines[j] + "  ";
-                    if (i == 1)
+                    if (i == 1) // po druhé číslici přidat dvojtečku
                         output[j] += colon.Split('\n')[j] + "  ";
                 }
             }
 
-            Console.SetCursorPosition(0, 0); // vždy na stejné místo
+            Console.SetCursorPosition(0, 0);
             Console.ForegroundColor = ConsoleColor.Green;
             foreach (string line in output)
             {
@@ -118,7 +97,5 @@ namespace DigitalClockApp
             }
             Console.ResetColor();
         }
-
-
     }
 }
