@@ -7,6 +7,7 @@ namespace DigitalClockApp
     {
         static void Main()
         {
+
             ClockManager clockManager = new ClockManager();
             clockManager.Run();
         }
@@ -23,10 +24,14 @@ namespace DigitalClockApp
         {
             while (running)
             {
+
                 DisplayClock(); // zobraz hodiny vždy jako první
 
                 Console.SetCursorPosition(0, 7); // menu pod hodinami
                 Console.ForegroundColor = ConsoleColor.Red;
+
+                Console.WriteLine("Jakub Olivík 3.C");
+
                 Console.WriteLine("==== MENU ====");
                 Console.WriteLine("1. Změna časového pásma");
                 Console.WriteLine("2. Nastavení budíku");
